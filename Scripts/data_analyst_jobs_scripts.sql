@@ -12,7 +12,7 @@ from data_analyst_jobs ;
 select * 
 from data_analyst_jobs     
 limit 10;
--- answer: UC DAVIS HEALTH SYSTEM
+-- answer: ExxonMobile
 
 
 
@@ -21,7 +21,10 @@ limit 10;
 select count(location) 
 from data_analyst_jobs
 where location = 'TN';
---where (location = 'TN' or location ='KY');
+
+select count(location) 
+from data_analyst_jobs
+where location IN('TN','KY');
 -- answer :  Postings Count in TN = 21     Posting  count in TN or KY = 27
 
 
@@ -29,7 +32,7 @@ where location = 'TN';
 
 -- Q.4 How many postings in Tennessee have a star rating above 4?
 
-select count(title)
+select * --count(title)
 from data_analyst_jobs
 where location = 'TN' and star_rating >4;
 
@@ -40,7 +43,7 @@ where location = 'TN' and star_rating >4;
 
 --Q.5 How many postings in the dataset have a review count between 500 and 1000?
 
-select count(title)
+select * --count(title)
 from data_analyst_jobs
 where review_count between 500 and 1000 ;
 
@@ -71,6 +74,11 @@ from data_analyst_jobs
 
 
 --Q.8 How many unique job titles are there for California companies?
+select count(distinct title) as unique_title_california
+from data_analyst_jobs
+where location = 'CA';
+--ans:230
+
 select count(distinct lower(title)) as unique_title_california
 from data_analyst_jobs
 where location = 'CA';
@@ -81,11 +89,11 @@ where location = 'CA';
 --Q.9 Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
 select company, avg(star_rating) as avg_rating 
 from data_analyst_jobs
-where review_count > 5000
+where review_count > 5000 and company is not null
 group by company ;
 
 
--- ans : 41
+-- ans : 40
 
 --Q.10 Add the code to order the query in #9 from highest to lowest average star rating. Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? What is that rating?
 
